@@ -1,0 +1,75 @@
+---------------- 1
+
+Alter table book
+add column Book_Status varchar(15) not null;
+
+Update book
+set book_status = "Available";
+
+-------------- 2
+
+alter table employee
+add column Employee_Status varchar(15) not null;
+
+update employee
+set Employee_Status = "full-time"
+where Employee_ID like "FT%";
+
+---------------- 3
+
+select * 
+from book join author on (book.book_Author = author.Author_ID)
+where author.Author_Nationality = "American";
+
+--------------- 4
+
+update loan
+set loan_fine = 20000
+where  day(Loan_return_date) -day(Loan_due_date) >= 5;
+
+---------------- 5
+
+select*
+from member
+where year(member_creation_date) = 2023;
+
+-------------- 6
+
+alter table member
+add column Member_Status varchar(10) not null;
+
+update member
+set Member_Status = "Active"
+where Member_Expired_Date >= "2024-11-08";
+
+update member
+set Member_Status = "Inactive"
+where Member_Expired_Date < "2024-11-08";
+
+-------------- 7
+
+select author.Author_Name, book.book_title, shelf.shelf_ID, shelf.shelf_capacity
+from book 
+join shelf on (book.book_Shelf_ID = shelf.shelf_ID)
+join author on (author.Author_ID = book.book_Author)
+where shelf.shelf_capacity <=10;
+
+--------------- 8
+
+select book.book_title, count(loan.Book_Book_ID) as Total_Borrowed
+from book join loan on (book.book_ID = loan.Book_Book_ID)
+where year(loan.Loan_Date) = 2023
+group by book_title
+Limit 3;
+
+----------------- 9
+
+select *
+from employee
+where employee.Employee_Email like "%@library.org";
+
+---------------- 10
+
+select *
+from book join shelf on (book.book_Shelf_ID = shelf.shelf_ID)
+where shelf.shelf_floor = 2;
