@@ -1,3 +1,132 @@
+--------DDL-------
+
+CREATE database ITS_Library;
+
+create TABLE author(
+    Author_ID varchar (7) NOT NULL PRIMARY KEY,
+    Author_Name varchar(100) NOT NULL ,
+    Author_Nationality varchar(100) NOT NULL ,
+    Author_BirthDate date NOT NULL 
+);
+
+create TABLE shelf(
+    shelf_ID char(6) NOT NULL  PRIMARY KEY,
+    shelf_capacity int NOT NULL ,
+    shelf_floor int NOT NULL 
+);
+
+create TABLE book(
+    book_ID char(7) NOT NULL  PRIMARY KEY,
+    book_title varchar(50) NOT NULL ,
+    book_Author varchar(100) NOT NULL ,
+    book_genre varchar(20) NOT NULL ,
+    book_release date NOT NULL ,
+    book_Shelf_ID char(7) NOT NULL ,
+    Foreign key(book_Shelf_ID) REFERENCES shelf(shelf_ID)
+);
+
+create TABLE author_book(
+    Author_Author_ID varchar(7) NOT NULL ,
+    Book_Book_ID char(7) NOT NULL ,
+    CONSTRAINT PK_AB PRIMARY KEY (Author_Author_ID, Book_Book_ID),
+    FOREIGN key (Author_Author_ID) REFERENCES author(author_ID),
+    FOREIGN key (Book_Book_ID) REFERENCES book (Book_ID)
+);
+
+create TABLE Member(
+    Member_ID char(7) NOT NULL PRIMARY KEY,
+    Member_Name varchar(100) NOT NULL ,
+    Member_Sddress varchar(100) NOT NULL ,
+    Member_Phonenum int NOT NULL ,
+    Member_Email varchar(100) NOT NULL ,
+    Member_Creation_Date timestamp NOT NULL,
+    Member_Expired_Date timestamp NOT NULL
+);
+
+create TABLE Employee(
+    Employee_ID char(16) NOT NULL ,
+    Employee_Name varchar(100) NOT NULL ,
+    Employee_Email varchar(100) NOT NULL ,
+    Employee_Phone int NOT NULL
+);
+
+create TABLE Loan(
+    Loan_ID varchar(7) NOT NULL ,
+    Loan_Date date NOT NULL ,
+    Loan_Return_Date date NOT NULL ,
+    Loan_Due_Date date NOT NULL ,
+    Loan_Fine date ,
+    Member_Member_ID CHAR(7) NOT NULL,
+    Book_Book_ID Char(13) NOT NULL,
+    FOREIGN KEY (Book_Book_ID) REFERENCES book (Book_ID),
+    FOREIGN KEY (Member_Member_ID) REFERENCES member (Member_ID)
+);
+create table publisher(
+	Publisher_ID varchar(7) not null PRIMARY KEY,
+    Name varchar(100) not null,
+    Addres varchar(100) not null,
+    Country varchar(100) not null,
+    Email varchar(50) not null
+   );
+
+alter table loan
+modify column Loan_return_date date;
+
+alter table loan
+modify column loan_fine int;
+
+INSERT into author values
+("AU001", "John Doe", "American", "1970-05-12"),
+("AU002", "Jane Smith", "British", "1985-07-24"),
+("AU003", "Robert Johnson", "American", "1962-10-02"),
+("AU004", "Emily Zhang", "Chinese", "1980-03-17"),
+("AU005", "Alice Nguyen", "Vietnamese", "1992-11-29");
+
+INSERT into book values
+("BK001", "The Great Adventure", "AU001", "Fiction", "2019-04-10", "SH001"),
+("BK002", "The World of Science", "AU002", "Science", "2020-06-15", "SH002"),
+("BK003", "American History Explained", "AU003", "History", "2018-02-20", "SH003"),
+("BK004", "Understanding the Cosmos", "AU004", "Science", "2021-09-11", "SH004"),
+("BK005", "Mystery of the Old Castle", "AU005", "Fiction", "2022-01-05", "SH005");
+
+INSERT into employee values
+("FT001", "Sarah Connor", "sarah@library.org", "1234567890"),
+("FT002", "Tom Watson", "tom@library.org", "9876543210"),
+("PT003", "Nancy Drew", "nancy@gmail.com", "5678901234"),
+("PT004", "James Bond", "james@library.org", "4561237890"),
+("FT005", "Laura Croft", "laura@library.org", "6789012345");
+
+INSERT into publisher values
+("PB001", "Penguin Books", "123 Main St", "USA", "contact@penguin.com"),
+("PB002", "HaerperCollins", "456 Oak Ave", "UK", "support@harpercollins.com"),
+("PB003", "Quanta Publishing", "789 Maple Rd", "Australia", "info@quanta.com"),
+("PB004", "Scholastic", "101 Pine Dr", "Canada", "inquiries@scholastic.com"),
+("PB005", "Random House", "202 Birch Ln", "USA", "service@randomhouse.com");
+
+INSERT into shelf values
+("SH001", 15, 1),
+("SH002", 5, 1),
+("SH003", 8, 2),
+("SH004", 10, 2),
+("SH005", 20, 3);
+
+INSERT into member values
+("M001", "Alice Peterson", "alice@gmail.com", "2022-02-15", "2023-02-15"),
+("M002", "Bob Smith", "bob@library.org", "2023-01-05", "2024-01-05"),
+("M003", "Charlie Brown", "charlie@gmail.com", "2023-03-20", "2024-03-20"),
+("M004", "Diane Lewis", "diane@library,org", "2023-11-01", "2024-11-01"),
+("M005", "Eve Johnson", "eve@gmail.com", "2021-10-15", "2022-10-15");
+
+INSERT into loan values
+("L001", "2023-01-10", "2023-01-20", "2023-01-15", "5000", "M001", "BK001"),
+("L002", "2023-05-12", "2023-05-22", "2023-05-15", "20000", "M002", "BK002"),
+("L003", "2023-08-15", "2023-08-25", "2023-08-18", "10000", "M003", "BK003"),
+("L004", "2023-11-01", "2023-11-05", "2023-11-03", "15000", "M004", "BK004"),
+("L005", "2023-12-10", "", "2023-12-17", "", "M005", "BK005");
+
+
+-------SOAL------
+
 ---------------- 1
 
 Alter table book
